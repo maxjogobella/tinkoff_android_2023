@@ -1,15 +1,10 @@
 package com.example.myapplication
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Adapter
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.adapter.MovieAdapter
-import com.example.myapplication.client.ApiFactory
 import com.example.myapplication.databinding.ActivityMainBinding
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
   

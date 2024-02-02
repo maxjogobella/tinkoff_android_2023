@@ -12,5 +12,5 @@ data class Movie(
     @SerializedName("year")
     val year : Int? = null,
     @SerializedName("genres")
-    val listOfGenre : List<Genre>
+    val listOfGenre : List<Genres>? = null
 )
