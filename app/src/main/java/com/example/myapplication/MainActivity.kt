@@ -12,11 +12,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ApiFactory.apiService.getMovieList()
+        ApiFactory.apiService.getTopMovie()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
+                Log.d("TEST_DATA", it.listOfTopMovies.toString())
             }, {
                 Log.d("TEST_DATA", it.message.toString())
             })
