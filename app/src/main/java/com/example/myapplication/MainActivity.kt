@@ -20,14 +20,17 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy {
         MainViewModel(Application())
     }
-  
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         val adapter = MovieAdapter()
+        binding.recycleViewMovies.adapter = adapter
 
-        viewModel.listOfMovies.observe(this) {list ->
+        viewModel.getTopMovies()
 
+        viewModel.listOfMovies.observe(this) { list ->
+            adapter.movieList = list
         }
+    }
 }

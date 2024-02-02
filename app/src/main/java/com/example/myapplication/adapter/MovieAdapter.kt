@@ -1,5 +1,6 @@
 package com.example.myapplication.adapter
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -25,7 +26,12 @@ class MovieAdapter() : Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val movie = movieList[position]
+        with(holder) {
+            movie.url?.let { ImageLoader.load(ivMainPoster, it) }
+            movie.name?.let { tvMainTitle.text = it }
+            movie.year?.let { tvMainYear.text = it.toString() }
+        }
     }
 
     override fun getItemCount(): Int = movieList.size
