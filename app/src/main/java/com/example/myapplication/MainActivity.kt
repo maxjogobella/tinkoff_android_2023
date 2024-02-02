@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.adapter.MovieAdapter
+import com.example.myapplication.client.Movie
 import com.example.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getTopMovies()
 
-        viewModel.listOfMovies.observe(this) { list ->
+       adapter.onReachEndListener = object : MovieAdapter.OnReachEndListener {
+           override fun onEndReach() {
+               viewModel.getTopMovies()
+           }
+       }
+
+        viewModel.listOfTopMoviesData.observe(this) { list ->
             adapter.movieList = list
         }
     }

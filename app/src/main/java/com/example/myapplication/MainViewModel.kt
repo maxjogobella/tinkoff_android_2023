@@ -14,14 +14,23 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainViewModel(application : Application) : AndroidViewModel(application) {
 
     private val compositeDisposable = CompositeDisposable()
-    val listOfMovies  = MutableLiveData<List<Movie>> ()
+    val listOfTopMoviesData  = MutableLiveData<List<Movie>> ()
+    private var counter : Int = 1
 
     fun getTopMovies() {
-        val disposable = ApiFactory.apiService.getTopMovie()
+        val disposable = ApiFactory.apiService.getTopMovie(page = counter)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                listOfMovies.value = it.listOfTopMovies
+            .subscribe({response ->
+                val currentMovies = listOfTopMoviesData.value?.toMutableList()
+                if (currentMovies != null) {
+                    response.listOfTopMovies?.let { currentMovies.addAll(it) }
+                    listOfTopMoviesData.value = currentMovies
+                    } else {
+                        listOfTopMoviesData.value = response.listOfTopMovies
+                    }
+                counter++
+
             }, {
                 Log.d("TEST_DATA", it.message.toString())
             })
