@@ -10,5 +10,7 @@ data class Movie(
     @SerializedName("posterUrl")
     val url : String? = null,
     @SerializedName("year")
-    val year : Int? = null
+    val year : Int? = null,
+    @SerializedName("genres")
+    val listOfGenre : List<Genres>? = null
 )

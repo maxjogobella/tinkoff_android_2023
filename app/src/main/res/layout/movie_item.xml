@@ -27,6 +27,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:maxHeight="100dp"
                 android:id="@+id/ivMainPoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -83,6 +84,7 @@
             tools:text="(2016)" />
 
         <ImageView
+            android:visibility="invisible"
             android:id="@+id/ivMainStar"
             android:layout_width="24dp"
             android:layout_height="24dp"
