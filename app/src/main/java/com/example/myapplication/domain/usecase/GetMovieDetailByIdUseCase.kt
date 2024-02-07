@@ -1,4 +1,6 @@
 package com.example.myapplication.domain.usecase
 
-class GetMovieDetailByIdUseCase {
+import com.example.myapplication.domain.repository.MovieRepository
+
+class GetMovieDetailByIdUseCase(private val movieRepository: MovieRepository) {
 }
