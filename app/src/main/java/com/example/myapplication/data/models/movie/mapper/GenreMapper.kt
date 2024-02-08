@@ -1,6 +1,6 @@
-package com.example.myapplication.data.mapper
+package com.example.myapplication.data.models.movie.mapper
 
-import com.example.myapplication.data.models.GenresTDO
+import com.example.myapplication.data.models.movie.GenresTDO
 import com.example.myapplication.domain.models.Genres
 
 class GenreMapper {

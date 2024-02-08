@@ -16,6 +16,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainViewModel(application: Application, repository : MovieRepository) : AndroidViewModel(application) {
 
     var currentPage = 1
+
     private val getTopMoviesUseCase = GetTopMoviesUseCase(repository)
     private val compositeDisposable = CompositeDisposable()
 

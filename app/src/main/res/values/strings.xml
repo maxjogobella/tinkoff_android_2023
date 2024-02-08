@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorite">Избранное</string>
+    <string name="popular">Популярные</string>
+    <string name="error_description">Произошла ошибка при загрузке данных,\nпроверьте подключение к сети.</string>
+    <string name="countries">Страны:</string>
+    <string name="genres">Жанры:</string>
 </resources>
