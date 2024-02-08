@@ -1,5 +1,4 @@
 # movie_kinopoisk
 
 # Use case
-![12](https://github.com/maxjogobella/tinkoff_android_2023/assets/106059025/6e096ce4-a5e2-4715-955f-73e147d7459d)
-
+![123](https://github.com/maxjogobella/tinkoff_android_2023/assets/106059025/593e1a3d-7593-4586-a009-4e23f1fe66aa)
