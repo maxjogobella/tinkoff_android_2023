@@ -1,10 +1,10 @@
-package com.example.myapplication.client
+package com.example.myapplication.data.network
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiFactory {
+object MovieApiFactory {
 
     private const val BASE_URL = "https://kinopoiskapiunofficial.tech/api/"
 
@@ -14,7 +14,7 @@ object ApiFactory {
         .baseUrl(BASE_URL)
         .build()
 
-    val apiService : ApiService = retrofit.create(ApiService::class.java)
+    val apiService : MovieApiService = retrofit.create(MovieApiService::class.java)
 
 
 }

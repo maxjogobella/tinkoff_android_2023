@@ -1,8 +1,8 @@
-package com.example.myapplication.client
+package com.example.myapplication.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Movie(
+data class MovieTDO(
     @SerializedName("kinopoiskId")
     val id : Int? = null,
     @SerializedName("nameRu")
@@ -12,5 +12,5 @@ data class Movie(
     @SerializedName("year")
     val year : Int? = null,
     @SerializedName("genres")
-    val listOfGenre : List<Genres>? = null
+    val listOfGenre : List<GenresTDO>? = null
 )
