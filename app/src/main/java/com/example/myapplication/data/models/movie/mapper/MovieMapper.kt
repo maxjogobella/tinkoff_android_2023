@@ -1,6 +1,6 @@
-package com.example.myapplication.data.mapper
+package com.example.myapplication.data.models.movie.mapper
 
-import com.example.myapplication.data.models.MovieTDO
+import com.example.myapplication.data.models.movie.MovieTDO
 import com.example.myapplication.domain.models.Movie
 
 class MovieMapper {

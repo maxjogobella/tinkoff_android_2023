@@ -15,7 +15,7 @@ import com.example.myapplication.presentation.adapter.MovieListAdapter
 import com.example.myapplication.presentation.viewmodels.MainViewModel
 import com.example.myapplication.presentation.viewmodels.facrotry.MainViewModelFactory
 
-class TopMovieFragment : Fragment() {
+class MovieTopFragment : Fragment() {
 
     private lateinit var binding : FragmentTopMovieBinding
 
@@ -51,6 +51,14 @@ class TopMovieFragment : Fragment() {
             viewModel.getFavoriteMovies(viewModel.currentPage + 1)
         }
 
+        adapterMovie.onMovieClickListener = {movie ->
+            val fragment = MovieDetailFragment.newInstance(movie)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
 
         viewModel.listOfMovies.observe(viewLifecycleOwner) {
             adapterMovie.submitList(it)
@@ -59,8 +67,8 @@ class TopMovieFragment : Fragment() {
 
 
     companion object {
-        fun newInstance() : TopMovieFragment {
-            return TopMovieFragment()
+        fun newInstance() : MovieTopFragment {
+            return MovieTopFragment()
         }
     }
 }
