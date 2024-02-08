@@ -1,5 +1,6 @@
 package com.example.myapplication.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -9,7 +10,11 @@ import com.example.myapplication.domain.models.Movie
 
 class MovieListAdapter : ListAdapter<Movie, MovieListViewHolder>(MovieListAdapterCallback()) {
 
+    var onReachEndListener : (() -> Unit)? = null
+    private var counter = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
+        Log.d("MovieListAdapter", "OnCreateViewHolder : ${counter++}")
         val inflater = LayoutInflater.from(parent.context)
         val view = MovieItemBinding.inflate(inflater, parent, false)
         return MovieListViewHolder((view))
@@ -23,8 +28,16 @@ class MovieListAdapter : ListAdapter<Movie, MovieListViewHolder>(MovieListAdapte
             tvMainTitle.text = movieItem.name
         }
 
+        if (currentList.size -6 <= position) {
+            onReachEndListener?.invoke()
+        }
+
         Glide.with(holder.itemView)
             .load(movieItem.url)
             .into(holder.ivMainPoster)
+    }
+
+    companion object {
+        const val MAX_POOL_SIZE = 3
     }
 }

@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel(application: Application, repository : MovieRepository) : AndroidViewModel(application) {
 
-    private var currentPage = 1
+    var currentPage = 1
     private val getTopMoviesUseCase = GetTopMoviesUseCase(repository)
 
     private val _listOfMovies = MutableLiveData<List<Movie>>()
@@ -27,8 +27,14 @@ class MainViewModel(application: Application, repository : MovieRepository) : An
         getTopMoviesUseCase.execute(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _listOfMovies.value = it
+            .subscribe({responseListMovies ->
+                val currentMovies = _listOfMovies.value?.toMutableList()
+                if (currentMovies != null) {
+                    responseListMovies.let { currentMovies.addAll(it) }
+                    _listOfMovies.value = currentMovies
+                } else {
+                    _listOfMovies.value = responseListMovies
+                }
                 currentPage = page
             }, {
 

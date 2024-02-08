@@ -28,6 +28,14 @@ class MainActivity : AppCompatActivity() {
 
         val rv = binding.recycleViewMovies
         rv.adapter = adapterMovie
+        rv.recycledViewPool.setMaxRecycledViews(
+            R.layout.movie_item,
+            MovieListAdapter.MAX_POOL_SIZE
+        )
+
+        adapterMovie.onReachEndListener = {
+            viewModel.getFavoriteMovies(viewModel.currentPage + 1)
+        }
 
 
         viewModel.listOfMovies.observe(this) {
