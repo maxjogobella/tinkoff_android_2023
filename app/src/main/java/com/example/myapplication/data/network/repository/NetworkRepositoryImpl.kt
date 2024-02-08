@@ -7,9 +7,7 @@ import io.reactivex.rxjava3.core.Single
 object NetworkRepositoryImpl : NetworkRepository {
 
     private val apiService = MovieApiFactory.apiService
-    override fun getTopMovies(): Single<TopMovieResponse> {
-        return apiService.getTopMovie(page = PAGE)
+    override fun getTopMovies(page : Int): Single<TopMovieResponse> {
+        return apiService.getTopMovie(page = page)
     }
-
-    private const val PAGE = 1
 }

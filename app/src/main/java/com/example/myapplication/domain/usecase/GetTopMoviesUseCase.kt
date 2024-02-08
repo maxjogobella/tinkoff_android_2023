@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.core.Single
 
 class GetTopMoviesUseCase(private val repository: MovieRepository) {
 
-    fun execute() : Single<List<Movie>> {
-        return repository.getTopMovies()
+    fun execute(page : Int) : Single<List<Movie>> {
+        return repository.getTopMovies(page = page)
     }
 
 }

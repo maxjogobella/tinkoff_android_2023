@@ -19,8 +19,8 @@ object MovieRepositoryImpl : MovieRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getTopMovies(): Single<List<Movie>> {
-        return networkRepository.getTopMovies()
+    override fun getTopMovies(page : Int): Single<List<Movie>> {
+        return networkRepository.getTopMovies(page = page)
             .flatMap {response ->
                 val movies = response.listOfTopMovies?.map { movieTDO -> movieMapper.mapFromMovieTDO(movieTDO) }
                 if (movies.isNullOrEmpty()) {

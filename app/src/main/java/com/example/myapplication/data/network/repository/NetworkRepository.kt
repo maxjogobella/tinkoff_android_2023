@@ -5,5 +5,5 @@ import com.example.myapplication.data.models.response.TopMovieResponse
 import io.reactivex.rxjava3.core.Single
 
     interface NetworkRepository {
-        fun getTopMovies() : Single<TopMovieResponse>
+        fun getTopMovies(page : Int) : Single<TopMovieResponse>
     }
