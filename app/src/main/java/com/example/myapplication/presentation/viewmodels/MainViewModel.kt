@@ -11,7 +11,7 @@ import com.example.myapplication.domain.usecase.GetTopMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MainViewModel(application: Application, private val repository : MovieRepository) : AndroidViewModel(application) {
+class MainViewModel(application: Application, repository : MovieRepository) : AndroidViewModel(application) {
 
     private val getTopMoviesUseCase = GetTopMoviesUseCase(repository)
 
