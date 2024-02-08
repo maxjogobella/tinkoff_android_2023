@@ -3,10 +3,11 @@ package com.example.myapplication.domain.usecase
 import com.example.myapplication.domain.models.Movie
 import com.example.myapplication.domain.repository.MovieRepository
 
-class SearchMovieByNameUseCase(private val movieRepository: MovieRepository) {
+class SearchMovieByNameUseCase(private val repository: MovieRepository) {
 
-    fun searchMovie(movie : Movie) : Movie {
-        return
+    fun execute(movieName : String) : Boolean {
+        repository.searchMovieByName(movieName)
+        return true
     }
 
 }
