@@ -5,9 +5,7 @@ import com.example.myapplication.domain.repository.MovieRepository
 
 class SearchMovieByNameUseCase(private val repository: MovieRepository) {
 
-    fun execute(movieName : String) : Boolean {
-        repository.searchMovieByName(movieName)
-        return true
+    operator fun invoke(movieName : String) : Movie {
+        return repository.searchMovieByName(movieName)
     }
-
 }
