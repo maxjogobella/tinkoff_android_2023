@@ -5,7 +5,7 @@ import com.example.myapplication.domain.repository.MovieRepository
 
 class AddFavoriteMovieUseCase(private val movieRepository: MovieRepository) {
 
-    operator fun invoke(movie : Movie) {
+    suspend operator fun invoke(movie : Movie) {
         movieRepository.addMovie(movie)
     }
 }
