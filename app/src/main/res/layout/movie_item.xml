@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
     android:layout_marginTop="-18dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="12dp"
     app:cardUseCompatPadding="true">
 
@@ -28,13 +28,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:maxHeight="100dp"
                 android:id="@+id/ivMainPoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
+                android:maxHeight="100dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/x1000" />
+                android:src="@drawable/ic_launcher_background" />
 
         </androidx.cardview.widget.CardView>
 
@@ -85,7 +85,6 @@
             tools:text="(2016)" />
 
         <ImageView
-            android:visibility="invisible"
             android:id="@+id/ivMainStar"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -93,6 +92,7 @@
             android:layout_marginEnd="8dp"
             android:contentDescription="@null"
             android:src="@drawable/baseline_star_24"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
