@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.myapplication.R
 import com.example.myapplication.data.MovieRepositoryImpl
 import com.example.myapplication.databinding.MovieDetailFragmentBinding
@@ -24,11 +25,15 @@ class MovieDetailFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("Fragment MovieDetailFragment == null")
 
     private val viewModelFactory by lazy {
-        ViewModelFactory(MovieRepositoryImpl(), movie.id)
+        ViewModelFactory(
+            application = requireActivity().application,
+            repository = MovieRepositoryImpl(requireActivity().application),
+            movieId = movie.id ?: throw RuntimeException("MovieId in MovieDetailFragment == null")
+        )
     }
 
     private val viewModel: MovieDetailViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[MovieDetailViewModel::class.java]
+       ViewModelProvider(this, viewModelFactory)[MovieDetailViewModel::class.java]
     }
 
     override fun onCreateView(

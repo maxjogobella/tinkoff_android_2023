@@ -41,6 +41,13 @@ class MoviesFragment : Fragment() {
         val movieAdapter = TopMoviesAdapter()
         recyclerView.adapter = movieAdapter
 
+        binding.buttonFavorite.setOnClickListener {
+            val fragment = FavoriteMoviesFragment.newInstance()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, fragment)
+                .commit()
+        }
+
         movieAdapter.onEndReachListener = {
             viewModel.loadTopMovies()
         }

@@ -1,5 +1,7 @@
 package com.example.myapplication.presentation.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +11,10 @@ import com.example.myapplication.domain.usecase.GetTopMoviesUseCase
 import com.example.myapplication.domain.models.Movie
 import kotlinx.coroutines.launch
 
-class MoviesViewModel : ViewModel() {
+class MoviesViewModel(application : Application) : AndroidViewModel(application) {
 
     private var page = 1
-    private val repository = MovieRepositoryImpl()
+    private val repository = MovieRepositoryImpl(application)
     private val getTopMoviesUseCase = GetTopMoviesUseCase(repository)
 
 

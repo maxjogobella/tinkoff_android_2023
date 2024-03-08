@@ -1,5 +1,7 @@
 package com.example.myapplication.presentation.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,12 +13,12 @@ import com.example.myapplication.domain.usecase.GetMovieDetailUseCase
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
-    private val repository: MovieRepository,
+    private val application : Application,
+    private val repository : MovieRepository,
     private val movieId : Int
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val getMovieDetail = GetMovieDetailUseCase(repository)
-
     private val _movieDetail = MutableLiveData<MovieDetail>()
     val movieDetail : LiveData<MovieDetail>
         get() = _movieDetail

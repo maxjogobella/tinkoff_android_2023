@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MoviesFragment">
+    tools:context=".presentation.FavoriteMoviesFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-light"
-        android:text="@string/popular"
+        android:text="@string/favorite"
         android:textColor="@color/black"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -55,9 +55,8 @@
         tools:listitem="@layout/movie_item" />
 
     <Button
-        android:clickable="false"
         android:id="@+id/button2"
-        style="@style/button_style_selected"
+        style="@style/button_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -74,8 +73,9 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
+        android:clickable="false"
         android:id="@+id/buttonFavorite"
-        style="@style/button_style"
+        style="@style/button_style_selected"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
