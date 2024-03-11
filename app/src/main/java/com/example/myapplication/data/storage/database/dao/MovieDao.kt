@@ -1,5 +1,6 @@
 package com.example.myapplication.data.storage.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,7 +11,7 @@ import com.example.myapplication.data.storage.models.MovieStorageModel
 interface MovieDao {
 
     @Query("SELECT * FROM movie_table")
-    suspend fun getFavoriteMoviesList() : List<MovieStorageModel>
+    fun getFavoriteMoviesList() : LiveData<List<MovieStorageModel>>
 
     @Query("SELECT * FROM movie_table WHERE id=:movieId LIMIT 1")
     suspend fun getFavoriteMovie(movieId : Int) : MovieStorageModel

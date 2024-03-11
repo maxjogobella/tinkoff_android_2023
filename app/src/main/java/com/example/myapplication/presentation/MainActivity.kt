@@ -15,9 +15,14 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun launchOnMoviesFragment() {
-        val fragment = MoviesFragment.newInstance()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view, fragment)
-            .commit()
+        var fragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view)
+        if (fragment !is MoviesFragment) {
+            fragment = MoviesFragment.newInstance()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
     }
 }

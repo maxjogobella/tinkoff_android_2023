@@ -55,7 +55,6 @@
         tools:listitem="@layout/movie_item" />
 
     <Button
-        android:clickable="false"
         android:id="@+id/button2"
         style="@style/button_style_selected"
         android:layout_width="0dp"
@@ -64,6 +63,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
+        android:clickable="false"
         android:text="@string/popular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonFavorite"
@@ -93,15 +93,17 @@
         android:id="@+id/clError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <ImageView
+            android:id="@+id/imageViewError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
+            android:elevation="4dp"
             android:src="@drawable/cloud"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,6 +112,7 @@
 
 
         <TextView
+            android:id="@+id/textViewDescriptionError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -117,8 +120,25 @@
             android:text="@string/error_description"
             android:textAlignment="center"
             android:textColor="@color/yellow_tinkoff"
-            app:layout_constraintTop_toBottomOf="@+id/clError"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewError"
             tools:layout_editor_absoluteX="4dp" />
+
+        <Button
+            style="@style/button_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="128dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="serif-monospace"
+            android:text="Повторить"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescriptionError" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

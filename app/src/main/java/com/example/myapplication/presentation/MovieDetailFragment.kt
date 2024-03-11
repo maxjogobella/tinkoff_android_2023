@@ -19,7 +19,7 @@ import com.example.myapplication.presentation.viewmodel.ViewModelFactory
 
 class MovieDetailFragment : Fragment() {
 
-    private lateinit var movie: Movie
+    private lateinit var movieItem: Movie
     private var _binding: MovieDetailFragmentBinding? = null
     private val binding: MovieDetailFragmentBinding
         get() = _binding ?: throw RuntimeException("Fragment MovieDetailFragment == null")
@@ -28,7 +28,7 @@ class MovieDetailFragment : Fragment() {
         ViewModelFactory(
             application = requireActivity().application,
             repository = MovieRepositoryImpl(requireActivity().application),
-            movieId = movie.id ?: throw RuntimeException("MovieId in MovieDetailFragment == null")
+            movieId = movieItem.id ?: throw RuntimeException("MovieId in MovieDetailFragment == null")
         )
     }
 
@@ -48,7 +48,7 @@ class MovieDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseArgs()
-        Log.d("MovieDetailFragment", "ID IS EQUAL ${movie.id}")
+        Log.d("MovieDetailFragment", "ID IS EQUAL ${movieItem.id}")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,10 +82,8 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        val args = requireArguments()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            movie = args.getParcelable(EXTRA_MOVIE, Movie::class.java)
-                ?: throw RuntimeException("Uknown movie args $movie")
+            movieItem = requireArguments().getParcelable(EXTRA_MOVIE, Movie::class.java) !!
         }
     }
 

@@ -1,6 +1,10 @@
 package com.example.myapplication.data
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import com.example.myapplication.data.retrofit.ApiFactory
 import com.example.myapplication.data.retrofit.model.mapper.MovieTDOMapper
 import com.example.myapplication.data.storage.database.MovieDatabase
@@ -17,9 +21,9 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
     private val movieStorageMapper = MovieStorageMapper()
     private val movieDao = MovieDatabase.getInstance(application).movieDao()
 
-    override suspend fun getFavoriteMovies(): List<Movie> {
-        val storageModel = movieDao.getFavoriteMoviesList()
-        return storageModel.map { movieStorageMapper.mapStorageModelToEntity(it) }
+    override fun getFavoriteMovies(): LiveData<List<Movie>> =
+        movieDao.getFavoriteMoviesList().map {
+            movieStorageMapper.mapListOfStorageModelToListOfEntity(it)
     }
 
     override suspend fun getMovieDetail(movieId: Int): MovieDetail {
@@ -39,15 +43,11 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
     }
 
     override suspend fun addMovie(movie: Movie) {
-        withContext(Dispatchers.IO) {
-            movieDao.addItem(movieStorageMapper.mapEntityToStorageModel(movie))
-        }
+        movieDao.addItem(movieStorageMapper.mapEntityToStorageModel(movie))
     }
 
     override suspend fun deleteFavoriteMovie(movieId: Int) {
-        withContext(Dispatchers.IO) {
-            movieDao.removeItem(movieId)
-        }
+        movieDao.removeItem(movieId)
     }
 
     override fun searchMovieByName(movieName: String): Movie {

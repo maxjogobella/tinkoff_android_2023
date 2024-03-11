@@ -6,37 +6,43 @@ import com.example.myapplication.domain.models.Genres
 import com.example.myapplication.domain.models.Movie
 
 class MovieStorageMapper {
-    fun mapStorageModelToEntity(movieStorageModel: MovieStorageModel) : Movie = Movie(
+    fun mapStorageModelToEntity(movieStorageModel: MovieStorageModel): Movie = Movie(
         id = movieStorageModel.id,
         name = movieStorageModel.name,
         url = movieStorageModel.url,
         year = movieStorageModel.year,
-        listOfGenre = mapListOfStorageModelToListOfEntity(movieStorageModel.listOfGenre)
+        listOfGenre = movieStorageModel.listOfGenre?.let { mapListOfGenresStorageToEntity(it) }
     )
 
-    fun mapEntityToStorageModel(movie : Movie) : MovieStorageModel = MovieStorageModel(
+    fun mapEntityToStorageModel(movie: Movie): MovieStorageModel = MovieStorageModel(
         id = movie.id,
         name = movie.name,
         url = movie.url,
         year = movie.year,
-        listOfGenre = mapListOfEntityGenresToListOfStorageGenres(movie.listOfGenre)
+        listOfGenre = movie.listOfGenre?.let { mapListOfEntityGenresToListOfStorageGenres(it) }
     )
 
-    private fun mapStorageGenresToEntity(genresStorageModel: GenresStorageModel) : Genres = Genres(
-        name = genresStorageModel.name
-    )
-
-    private fun mapEntityGenresToStorage(genres: Genres) : GenresStorageModel = GenresStorageModel(
-        name = genres.name
-    )
-
-    private fun mapListOfStorageModelToListOfEntity(list : List<GenresStorageModel>?) : List<Genres>? =
-        list?.map {
-            mapStorageGenresToEntity(it)
-        }
-
-    private fun mapListOfEntityGenresToListOfStorageGenres(list : List<Genres>?) : List<GenresStorageModel>? =
-        list?.map {
-            mapEntityGenresToStorage(it)
-        }
+    fun mapListOfStorageModelToListOfEntity(list: List<MovieStorageModel>) = list.map {
+        mapStorageModelToEntity(it)
+    }
 }
+
+private fun mapStorageGenresToEntity(genresStorageModel: GenresStorageModel): Genres = Genres(
+    name = genresStorageModel.name
+)
+
+private fun mapEntityGenresToStorage(genres: Genres): GenresStorageModel = GenresStorageModel(
+    name = genres.name
+)
+
+fun mapListOfGenresStorageToEntity(list: List<GenresStorageModel>): List<Genres> =
+    list.map {
+        mapStorageGenresToEntity(it)
+    }
+
+private fun mapListOfEntityGenresToListOfStorageGenres(list: List<Genres>): List<GenresStorageModel> =
+    list.map {
+        mapEntityGenresToStorage(it)
+    }
+
+

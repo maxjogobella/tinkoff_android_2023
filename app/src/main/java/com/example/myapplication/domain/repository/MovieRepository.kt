@@ -1,10 +1,11 @@
 package com.example.myapplication.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.example.myapplication.domain.models.Movie
 import com.example.myapplication.domain.models.MovieDetail
 
 interface MovieRepository {
-    suspend fun getFavoriteMovies() : List<Movie>
+    fun getFavoriteMovies() : LiveData<List<Movie>>
     suspend fun getMovieDetail(movieId : Int) : MovieDetail
     suspend fun getTopMovies(page : Int) : List<Movie>
     suspend fun addMovie(movie : Movie)
