@@ -1,4 +1,4 @@
-package com.example.myapplication.presentation
+package com.example.myapplication.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,9 +19,12 @@ class FavoriteMoviesFragment : Fragment() {
     private val viewModel : FavoriteMoviesViewModel by lazy {
         ViewModelProvider(this)[FavoriteMoviesViewModel::class.java]
     }
+
     private var _binding : FavoriteMoviesFragmentBinding? = null
     private val binding : FavoriteMoviesFragmentBinding
         get() = _binding ?: throw RuntimeException("Fragment FavoriteMoviesFragment == null")
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -32,8 +35,6 @@ class FavoriteMoviesFragment : Fragment() {
         viewModel.listOfFavoriteMovies.observe(viewLifecycleOwner) {
             adapterMv.submitList(it)
         }
-
-        viewModel.listOfFavoriteMovies
 
         adapterMv.onMovieClickLongListener = {
             val corountine = CoroutineScope(Dispatchers.IO)

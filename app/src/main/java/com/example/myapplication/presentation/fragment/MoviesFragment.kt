@@ -1,4 +1,5 @@
-package com.example.myapplication.presentation
+package com.example.myapplication.presentation.fragment
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,23 +16,19 @@ import com.example.myapplication.presentation.viewmodel.MoviesViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MoviesFragment : Fragment() {
-1й
-    private val viewModel : MoviesViewModel by lazy {
+
+    private val viewModel: MoviesViewModel by lazy {
         Log.d("MoviesFragment", "Creating new ViewModel")
         ViewModelProvider(this)[MoviesViewModel::class.java]
     }
-
     private lateinit var moviesAdapter: TopMoviesAdapter
-    private var _binding : MoviesFragmentBinding? = null
-    private val binding : MoviesFragmentBinding
+
+    private var _binding: MoviesFragmentBinding? = null
+    private val binding: MoviesFragmentBinding
         get() = _binding ?: throw RuntimeException("Fragment MoviesFragment == null")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,59 +42,79 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = binding.recycleViewMovies
-        moviesAdapter = TopMoviesAdapter()
-        recyclerView.adapter = moviesAdapter
+        setUpAdapter()
+        observeViewModel()
+        launchOnFavoriteMoviesFragment()
+        setAdapterListenerOnLongListener()
+        setAdapterListenerOnListener()
+        setAdapterListenerOnEndListener()
 
-        binding.buttonFavorite.setOnClickListener {
-            val fragment = FavoriteMoviesFragment.newInstance()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view, fragment)
-                .addToBackStack(null)
-                .commit()
+    }
+
+    private fun observeViewModel() {
+
+        viewModel.listOfMovies.observe(viewLifecycleOwner) { listOfTopMovies ->
+            moviesAdapter.submitList(listOfTopMovies)
         }
 
-        viewModel.internetIsNotWorking.observe(viewLifecycleOwner) {isNotWorking ->
-            if (isNotWorking) {
-                binding.clError.visibility = View.VISIBLE
-            } else {
-                binding.clError.visibility = View.INVISIBLE
+        viewModel.internetIsNotWorking.observe(viewLifecycleOwner) { isNotWorking ->
+            with(binding) {
+                if (isNotWorking) {
+                    clError.visibility = View.VISIBLE
+                } else {
+                    clError.visibility = View.INVISIBLE
+                }
             }
         }
+    }
 
+    private fun setAdapterListenerOnEndListener() {
         moviesAdapter.onEndReachListener = {
             viewModel.loadTopMovies()
         }
+    }
 
-        moviesAdapter.onMovieClickLongListener = {movie ->
+    private fun setAdapterListenerOnLongListener() {
+        moviesAdapter.onMovieClickLongListener = { movie ->
             val coroutine = CoroutineScope(Dispatchers.IO)
             coroutine.launch {
                 viewModel.saveMovie(movie)
             }
-            Toast.makeText(requireContext(), "Фильм добавление в избранное", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Фильм успешно добавлен", Toast.LENGTH_SHORT).show()
         }
+    }
 
-
+    private fun setAdapterListenerOnListener() {
         moviesAdapter.onMovieClickListener = { movie: Movie ->
             val fragment = MovieDetailFragment.newInstance(movie)
             requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_view, fragment)
-                    .commit()
-
-        }
-
-        viewModel.listOfMovies.observe(viewLifecycleOwner) {listOfTopMovies ->
-            moviesAdapter.submitList(listOfTopMovies)
+                .replace(R.id.fragment_container_view, fragment)
+                .commit()
         }
     }
-    companion object {
-        fun newInstance() : MoviesFragment {
-            return MoviesFragment()
+
+    private fun launchOnFavoriteMoviesFragment() {
+        binding.buttonFavorite.setOnClickListener {
+            val fragment = FavoriteMoviesFragment.newInstance()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, fragment)
+                .commit()
         }
+    }
+
+    private fun setUpAdapter() {
+        moviesAdapter = TopMoviesAdapter()
+        binding.recycleViewMovies.adapter = moviesAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance(): MoviesFragment {
+            return MoviesFragment()
+        }
     }
 }

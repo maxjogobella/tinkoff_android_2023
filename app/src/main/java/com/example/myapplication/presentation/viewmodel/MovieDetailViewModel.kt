@@ -9,27 +9,32 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.MovieRepositoryImpl
 import com.example.myapplication.domain.models.MovieDetail
 import com.example.myapplication.domain.repository.MovieRepository
+import com.example.myapplication.domain.usecase.GetFavoriteMovieUseCase
 import com.example.myapplication.domain.usecase.GetMovieDetailUseCase
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
-    private val application : Application,
-    private val repository : MovieRepository,
-    private val movieId : Int
+    private val application: Application,
+    private val repository: MovieRepository,
+    private val movieId: Int
 ) : AndroidViewModel(application) {
 
-    private val getMovieDetail = GetMovieDetailUseCase(repository)
-    private val _movieDetail = MutableLiveData<MovieDetail>()
-    val movieDetail : LiveData<MovieDetail>
+    private val _movieDetail = MutableLiveData<MovieDetail?>()
+    val movieDetail: LiveData<MovieDetail?>
         get() = _movieDetail
 
     init {
-        getMovieDetail(movieId)
+        fetchMovieDetail()
     }
 
-    private fun getMovieDetail(movieId : Int) {
+    private fun fetchMovieDetail() {
         viewModelScope.launch {
-            _movieDetail.value = getMovieDetail.invoke(movieId)
+            val favoriteMovie = repository.getFavoriteMovie(movieId)
+            if (favoriteMovie != null) {
+                _movieDetail.value = favoriteMovie
+            } else {
+                _movieDetail.value = repository.getMovieDetail(movieId)
+            }
         }
     }
 }

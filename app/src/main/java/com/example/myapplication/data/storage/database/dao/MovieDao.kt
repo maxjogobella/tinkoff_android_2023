@@ -14,7 +14,7 @@ interface MovieDao {
     fun getFavoriteMoviesList() : LiveData<List<MovieStorageModel>>
 
     @Query("SELECT * FROM movie_table WHERE id=:movieId LIMIT 1")
-    suspend fun getFavoriteMovie(movieId : Int) : MovieStorageModel
+    fun getFavoriteMovie(movieId : Int) : MovieStorageModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItem(movieStorageModel: MovieStorageModel)

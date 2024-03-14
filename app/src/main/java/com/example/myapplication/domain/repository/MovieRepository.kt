@@ -10,5 +10,6 @@ interface MovieRepository {
     suspend fun getTopMovies(page : Int) : List<Movie>
     suspend fun addMovie(movie : Movie)
     suspend fun deleteFavoriteMovie(movieId : Int)
+    suspend fun getFavoriteMovie(movieId : Int) : MovieDetail?
     fun searchMovieByName(movieName : String) : Movie
 }

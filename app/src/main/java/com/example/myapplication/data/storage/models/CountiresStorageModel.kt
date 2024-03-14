@@ -1,6 +1,5 @@
 package com.example.myapplication.data.storage.models
 
-
-data class GenresStorageModel (
+data class CountiresStorageModel(
     val name : String? = null
 )

@@ -21,6 +21,17 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
     private val movieStorageMapper = MovieStorageMapper()
     private val movieDao = MovieDatabase.getInstance(application).movieDao()
 
+    override suspend fun getFavoriteMovie(movieId: Int): MovieDetail? {
+        return withContext(Dispatchers.IO) {
+            val movieStorageModel = movieDao.getFavoriteMovie(movieId)
+            if (movieStorageModel != null) {
+                return@withContext movieStorageMapper.mapStorageDetailModelToDetailEntity(movieStorageModel)
+            } else {
+                return@withContext null
+            }
+        }
+    }
+
     override fun getFavoriteMovies(): LiveData<List<Movie>> =
         movieDao.getFavoriteMoviesList().map {
             movieStorageMapper.mapListOfStorageModelToListOfEntity(it)

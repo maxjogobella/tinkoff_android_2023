@@ -5,13 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.myapplication.data.storage.CountriesListConverter
 import com.example.myapplication.data.storage.GenresListConverter
 import com.example.myapplication.data.storage.database.dao.MovieDao
 import com.example.myapplication.data.storage.models.MovieStorageModel
 
 
-@Database(entities = [MovieStorageModel::class], version = 1, exportSchema = false)
-@TypeConverters(GenresListConverter::class)
+@Database(entities = [MovieStorageModel::class], version = 7, exportSchema = false)
+@TypeConverters(GenresListConverter::class, CountriesListConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
@@ -27,7 +28,7 @@ abstract class MovieDatabase : RoomDatabase() {
                     context,
                     MovieDatabase::class.java,
                     DATABASE_NAME
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }
