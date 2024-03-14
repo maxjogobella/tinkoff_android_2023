@@ -11,12 +11,12 @@ import com.example.myapplication.data.storage.database.dao.MovieDao
 import com.example.myapplication.data.storage.models.MovieStorageModel
 
 
-@Database(entities = [MovieStorageModel::class], version = 7, exportSchema = false)
+@Database(entities = [MovieStorageModel::class], version = 9, exportSchema = false)
 @TypeConverters(GenresListConverter::class, CountriesListConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
-        private const val DATABASE_NAME = "movie.db"
+        private const val DATABASE_NAME = "movies.db"
         private var INSTANCE : MovieDatabase? = null
         fun getInstance(context : Context) : MovieDatabase {
             INSTANCE?.let { return it }

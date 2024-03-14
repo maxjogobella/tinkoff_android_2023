@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.myapplication.data.storage.models.MovieDetailStorageModel
 import com.example.myapplication.data.storage.models.MovieStorageModel
 
 @Dao
@@ -14,7 +15,7 @@ interface MovieDao {
     fun getFavoriteMoviesList() : LiveData<List<MovieStorageModel>>
 
     @Query("SELECT * FROM movie_table WHERE id=:movieId LIMIT 1")
-    fun getFavoriteMovie(movieId : Int) : MovieStorageModel
+    fun getFavoriteMovie(movieId : Int) : MovieDetailStorageModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItem(movieStorageModel: MovieStorageModel)

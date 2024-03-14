@@ -2,11 +2,14 @@ package com.example.myapplication.data.storage.models.mapper
 
 import com.example.myapplication.data.storage.models.CountiresStorageModel
 import com.example.myapplication.data.storage.models.GenresStorageModel
+import com.example.myapplication.data.storage.models.MovieDetailStorageModel
 import com.example.myapplication.data.storage.models.MovieStorageModel
 import com.example.myapplication.domain.models.Country
 import com.example.myapplication.domain.models.Genres
 import com.example.myapplication.domain.models.Movie
 import com.example.myapplication.domain.models.MovieDetail
+
+
 
 class MovieStorageMapper {
 
@@ -16,21 +19,13 @@ class MovieStorageMapper {
             id = movieStorageModel.id,
             name = movieStorageModel.name,
             url = movieStorageModel.url,
-            listOfGenre = movieStorageModel.listOfGenre?.let { mapListOfGenresStorageToEntity(it) }
-        )
-    }
-
-    fun mapMovieStorageToEntityMovie(movieStorageModel: MovieStorageModel) : Movie {
-        return Movie(
-            id = movieStorageModel.id,
-            name = movieStorageModel.name,
-            url = movieStorageModel.url,
+            year = movieStorageModel.year,
             listOfGenre = movieStorageModel.listOfGenre?.let { mapListOfGenresStorageToEntity(it) }
         )
     }
 
     fun mapListOfMoviesStorageToListOfEntityMovies(list : List<MovieStorageModel>) : List<Movie> {
-        return list.map { mapMovieStorageToEntityMovie(it) }
+        return list.map { mapStorageModelToEntity(it) }
     }
 
     fun mapEntityToStorageModel(movie: Movie): MovieStorageModel {
@@ -38,12 +33,13 @@ class MovieStorageMapper {
             id = movie.id,
             name = movie.name,
             url = movie.url,
+            year = movie.year,
             listOfGenre = movie.listOfGenre?.let { mapListOfEntityGenresToListOfStorageGenres(it) }
         )
     }
 
     // Mapping function for MovieDetail
-    fun mapStorageDetailModelToDetailEntity(movieStorageModel: MovieStorageModel): MovieDetail {
+    fun mapStorageDetailModelToDetailEntity(movieStorageModel: MovieDetailStorageModel): MovieDetail {
         return MovieDetail(
             id = movieStorageModel.id,
             name = movieStorageModel.name,

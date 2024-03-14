@@ -27,7 +27,7 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
             if (movieStorageModel != null) {
                 return@withContext movieStorageMapper.mapStorageDetailModelToDetailEntity(movieStorageModel)
             } else {
-                return@withContext null
+                return@withContext movieTDOMapper.mapTDODetailToEntity(ApiFactory.apiService.getMovieById(movieId))
             }
         }
     }

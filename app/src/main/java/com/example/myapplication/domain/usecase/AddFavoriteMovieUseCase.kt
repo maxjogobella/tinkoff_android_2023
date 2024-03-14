@@ -1,6 +1,7 @@
 package com.example.myapplication.domain.usecase
 
 import com.example.myapplication.domain.models.Movie
+import com.example.myapplication.domain.models.MovieDetail
 import com.example.myapplication.domain.repository.MovieRepository
 
 class AddFavoriteMovieUseCase(private val movieRepository: MovieRepository) {

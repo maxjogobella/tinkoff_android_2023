@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
 data class MovieStorageModel(
     @PrimaryKey val id : Int? = null,
     val name : String? = null,
-    val description : String? = null,
     val url : String? = null,
-    val listOfCountry : List<CountiresStorageModel>? = null,
+    val year : Int? = null,
     val listOfGenre : List<GenresStorageModel>? = null
 )
 
