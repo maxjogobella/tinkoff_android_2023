@@ -4,15 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.myapplication.data.storage.CountriesListConverter
+import com.example.myapplication.data.storage.GenresListConverter
 import com.example.myapplication.data.storage.database.dao.MovieDao
+import com.example.myapplication.data.storage.models.MovieDetailStorageModel
 import com.example.myapplication.data.storage.models.MovieStorageModel
 
 
-@Database(entities = [MovieStorageModel::class], version = 1, exportSchema = false)
+@Database(entities = [MovieStorageModel::class, MovieDetailStorageModel::class], version = 12, exportSchema = false)
+@TypeConverters(GenresListConverter::class, CountriesListConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
-        private const val DATABASE_NAME = "movie.db"
+        private const val DATABASE_NAME = "moviess.db"
         private var INSTANCE : MovieDatabase? = null
         fun getInstance(context : Context) : MovieDatabase {
             INSTANCE?.let { return it }
@@ -24,7 +29,7 @@ abstract class MovieDatabase : RoomDatabase() {
                     context,
                     MovieDatabase::class.java,
                     DATABASE_NAME
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

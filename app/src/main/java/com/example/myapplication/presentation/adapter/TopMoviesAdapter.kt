@@ -10,6 +10,7 @@ class TopMoviesAdapter : ListAdapter<Movie, MovieViewHolder>(MovieListAdapterCal
 
     var onEndReachListener : (() -> Unit)? = null
     var onMovieClickListener : ((Movie) -> Unit)? = null
+    var onMovieClickLongListener : ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,6 +37,11 @@ class TopMoviesAdapter : ListAdapter<Movie, MovieViewHolder>(MovieListAdapterCal
 
         holder.itemView.setOnClickListener {
             onMovieClickListener?.invoke(movieItem)
+        }
+
+        holder.itemView.setOnLongClickListener {
+            onMovieClickLongListener?.invoke(movieItem)
+            return@setOnLongClickListener true
         }
     }
 
