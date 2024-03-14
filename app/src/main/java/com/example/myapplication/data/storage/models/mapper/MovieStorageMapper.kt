@@ -31,9 +31,9 @@ class MovieStorageMapper {
     fun mapEntityToStorageModel(movie: Movie): MovieStorageModel {
         return MovieStorageModel(
             id = movie.id,
+            year = movie.year,
             name = movie.name,
             url = movie.url,
-            year = movie.year,
             listOfGenre = movie.listOfGenre?.let { mapListOfEntityGenresToListOfStorageGenres(it) }
         )
     }
@@ -50,6 +50,18 @@ class MovieStorageMapper {
         )
     }
 
+    fun mapEntityDetailToDetailModel(movieDetail: MovieDetail): MovieDetailStorageModel {
+        return MovieDetailStorageModel(
+            id = movieDetail.id,
+            name = movieDetail.name,
+            description = movieDetail.description,
+            url = movieDetail.url,
+            listOfCountry = movieDetail.listOfCountry?.let { mapListOfEntityCountriesToListOfStorageCountries(it) },
+            listOfGenre = movieDetail.listOfGenre?.let { mapListOfEntityGenresToListOfStorageGenres(it) }
+        )
+    }
+
+
     // Mapping functions for lists
     fun mapListOfStorageModelToListOfEntity(list: List<MovieStorageModel>): List<Movie> {
         return list.map { mapStorageModelToEntity(it) }
@@ -63,6 +75,10 @@ class MovieStorageMapper {
         return list.map { mapEntityGenresToStorage(it) }
     }
 
+    fun mapListOfEntityCountriesToListOfStorageCountries(list: List<Country>): List<CountiresStorageModel> {
+        return list.map { mapEntityCountriesToStorage(it) }
+    }
+
     fun mapListOfCountriesStorageToEntity(list: List<CountiresStorageModel>): List<Country> {
         return list.map { mapStorageCountriesToEntity(it) }
     }
@@ -74,6 +90,10 @@ class MovieStorageMapper {
 
     private fun mapEntityGenresToStorage(genres: Genres): GenresStorageModel {
         return GenresStorageModel(name = genres.name)
+    }
+
+    private fun mapEntityCountriesToStorage(genres: Country): CountiresStorageModel {
+        return CountiresStorageModel(name = genres.name)
     }
 
     private fun mapStorageCountriesToEntity(countriesStorageModel: CountiresStorageModel): Country {

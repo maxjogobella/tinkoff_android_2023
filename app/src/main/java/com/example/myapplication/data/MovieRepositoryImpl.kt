@@ -21,7 +21,7 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
     private val movieStorageMapper = MovieStorageMapper()
     private val movieDao = MovieDatabase.getInstance(application).movieDao()
 
-    override suspend fun getFavoriteMovie(movieId: Int): MovieDetail? {
+    override suspend fun getFavoriteMovie(movieId: Int): MovieDetail {
         return withContext(Dispatchers.IO) {
             val movieStorageModel = movieDao.getFavoriteMovie(movieId)
             if (movieStorageModel != null) {
@@ -54,6 +54,9 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
     }
 
     override suspend fun addMovie(movie: Movie) {
+        val detailMovie = movie.id?.let { getMovieDetail(movieId = it) }
+        detailMovie?.let { movieStorageMapper.mapEntityDetailToDetailModel(it) }
+            ?.let { movieDao.addDetailItem(it) }
         movieDao.addItem(movieStorageMapper.mapEntityToStorageModel(movie))
     }
 

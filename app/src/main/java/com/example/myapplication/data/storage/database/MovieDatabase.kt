@@ -8,15 +8,16 @@ import androidx.room.TypeConverters
 import com.example.myapplication.data.storage.CountriesListConverter
 import com.example.myapplication.data.storage.GenresListConverter
 import com.example.myapplication.data.storage.database.dao.MovieDao
+import com.example.myapplication.data.storage.models.MovieDetailStorageModel
 import com.example.myapplication.data.storage.models.MovieStorageModel
 
 
-@Database(entities = [MovieStorageModel::class], version = 9, exportSchema = false)
+@Database(entities = [MovieStorageModel::class, MovieDetailStorageModel::class], version = 12, exportSchema = false)
 @TypeConverters(GenresListConverter::class, CountriesListConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
-        private const val DATABASE_NAME = "movies.db"
+        private const val DATABASE_NAME = "moviess.db"
         private var INSTANCE : MovieDatabase? = null
         fun getInstance(context : Context) : MovieDatabase {
             INSTANCE?.let { return it }

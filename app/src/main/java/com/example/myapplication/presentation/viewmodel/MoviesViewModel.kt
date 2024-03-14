@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.MovieRepositoryImpl
 import com.example.myapplication.domain.models.Movie
+import com.example.myapplication.domain.models.MovieDetail
 import com.example.myapplication.domain.usecase.AddFavoriteMovieUseCase
 import com.example.myapplication.domain.usecase.GetTopMoviesUseCase
 import kotlinx.coroutines.launch
@@ -56,6 +57,8 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     suspend fun saveMovie(movie: Movie) {
-        addFavoriteMovieUseCase.invoke(movie)
+      //  val movieDetail = movie.id?.let { repository.getMovieDetail(movieId = it) }
+      //  movieDetail?.let { addFavoriteMovieUseCase.invoke(movie) }
+        repository.addMovie(movie)
     }
 }
