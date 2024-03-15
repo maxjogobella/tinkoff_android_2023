@@ -124,6 +124,7 @@
             tools:layout_editor_absoluteX="4dp" />
 
         <Button
+            android:id="@+id/buttonTryAgain"
             style="@style/button_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

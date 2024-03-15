@@ -49,6 +49,11 @@ class MoviesFragment : Fragment() {
         setAdapterListenerOnListener()
         setAdapterListenerOnEndListener()
 
+
+        binding.buttonTryAgain.setOnClickListener{
+            viewModel.loadTopMovies()
+        }
+
     }
 
     private fun observeViewModel() {

@@ -85,6 +85,7 @@
             tools:text="(2016)" />
 
         <ImageView
+            android:visibility="invisible"
             android:id="@+id/ivMainStar"
             android:layout_width="28dp"
             android:layout_height="28dp"
