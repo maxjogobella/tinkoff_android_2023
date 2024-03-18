@@ -48,8 +48,8 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
     override suspend fun getTopMovies(page : Int): List<Movie> {
         return withContext(Dispatchers.IO) {
             val tdoModel = ApiFactory.apiService.getTopMovie(page = page).listOfTopMovies
-            tdoModel?.map { movieTDOMapper.mapMovieTDOtoEntity(it) }
-                ?: throw RuntimeException("Context getFavoriteMovies == null")
+            tdoModel?.map { movie -> movieTDOMapper.mapMovieTDOtoEntity(movie)
+            } ?: throw RuntimeException("Context getFavoriteMovies == null")
         }
     }
 
@@ -57,6 +57,7 @@ class MovieRepositoryImpl(application : Application) : MovieRepository {
         val detailMovie = movie.id?.let { getMovieDetail(movieId = it) }
         detailMovie?.let { movieStorageMapper.mapEntityDetailToDetailModel(it) }
             ?.let { movieDao.addDetailItem(it) }
+        movie.isFavorite = true
         movieDao.addItem(movieStorageMapper.mapEntityToStorageModel(movie))
     }
 

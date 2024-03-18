@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
+import com.example.myapplication.data.MovieRepositoryImpl
 import com.example.myapplication.databinding.FavoriteMoviesFragmentBinding
 import com.example.myapplication.presentation.adapter.TopMoviesAdapter
 import com.example.myapplication.presentation.viewmodel.FavoriteMoviesViewModel
@@ -29,8 +30,9 @@ class FavoriteMoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = binding.recycleView
-        val adapterMv = TopMoviesAdapter()
+        val adapterMv = TopMoviesAdapter(movieRepository = MovieRepositoryImpl(requireActivity().application))
         recyclerView.adapter = adapterMv
+
 
         viewModel.listOfFavoriteMovies.observe(viewLifecycleOwner) {
             adapterMv.submitList(it)

@@ -12,12 +12,12 @@ import com.example.myapplication.data.storage.models.MovieDetailStorageModel
 import com.example.myapplication.data.storage.models.MovieStorageModel
 
 
-@Database(entities = [MovieStorageModel::class, MovieDetailStorageModel::class], version = 12, exportSchema = false)
+@Database(entities = [MovieStorageModel::class, MovieDetailStorageModel::class], version = 14, exportSchema = false)
 @TypeConverters(GenresListConverter::class, CountriesListConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
-        private const val DATABASE_NAME = "moviess.db"
+        private const val DATABASE_NAME = "moviess1.db"
         private var INSTANCE : MovieDatabase? = null
         fun getInstance(context : Context) : MovieDatabase {
             INSTANCE?.let { return it }

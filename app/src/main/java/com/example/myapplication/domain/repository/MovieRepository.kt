@@ -8,6 +8,7 @@ interface MovieRepository {
     fun getFavoriteMovies() : LiveData<List<Movie>>
     suspend fun getMovieDetail(movieId : Int) : MovieDetail
     suspend fun getTopMovies(page : Int) : List<Movie>
+
     suspend fun addMovie(movie : Movie)
     suspend fun deleteFavoriteMovie(movieId : Int)
     suspend fun getFavoriteMovie(movieId : Int) : MovieDetail?

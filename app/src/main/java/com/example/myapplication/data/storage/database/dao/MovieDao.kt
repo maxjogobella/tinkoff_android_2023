@@ -19,6 +19,9 @@ interface MovieDao {
     @Query("SELECT * FROM detail_table WHERE id=:movieId LIMIT 1")
     fun getFavoriteMovie(movieId : Int) : MovieDetailStorageModel
 
+    @Query("DELETE FROM detail_table WHERE id=:movieId")
+    fun deleteFavoriteDetailMovie(movieId: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItem(movieStorageModel: MovieStorageModel)
 
