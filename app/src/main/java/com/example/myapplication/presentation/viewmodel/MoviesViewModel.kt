@@ -33,6 +33,8 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     private val _isLoading = MutableLiveData<Boolean>()
     private val _internetIsNotWorking = MutableLiveData<Boolean>()
 
+    val listOfMovies : LiveData<List<Movie>?>
+        get() = _listOfMovies
     private val listOfFavoriteMovies : LiveData<List<Movie>>
         get() = getFavoriteMoviesUseCase.invoke()
 
@@ -77,10 +79,10 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
     private fun updateMovieList(movies: List<Movie>) {
-        val moviesFilled = _listOfMovies.value?.toMutableList()
+        val moviesFilled = _listOfMovies.value?.toMutableSet()
         if (moviesFilled != null) {
             moviesFilled.addAll(movies)
-            _listOfMovies.value = moviesFilled
+            _listOfMovies.value = moviesFilled.toList()
         } else {
             _listOfMovies.value = movies
         }

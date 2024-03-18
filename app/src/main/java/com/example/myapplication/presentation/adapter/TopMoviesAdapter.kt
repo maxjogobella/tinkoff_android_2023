@@ -19,6 +19,9 @@ class TopMoviesAdapter(
     var onMovieClickListener: ((Movie) -> Unit)? = null
     var onMovieClickLongListener: ((Movie) -> Unit)? = null
 
+    fun setFilteredList(mList : List<Movie>) {
+        submitList(mList)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)

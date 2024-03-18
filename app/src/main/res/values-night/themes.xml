@@ -6,6 +6,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorAccent">@color/yellow_tinkoff</item>
         <!-- Status bar color. -->
         <!-- Customize your theme here. -->
     </style>

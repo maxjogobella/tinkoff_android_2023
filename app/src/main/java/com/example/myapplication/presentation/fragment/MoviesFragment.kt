@@ -6,18 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
 import com.example.myapplication.data.MovieRepositoryImpl
-import com.example.myapplication.data.storage.database.MovieDatabase
 import com.example.myapplication.databinding.MoviesFragmentBinding
 import com.example.myapplication.domain.models.Movie
+import com.example.myapplication.domain.repository.MovieRepository
 import com.example.myapplication.presentation.adapter.TopMoviesAdapter
 import com.example.myapplication.presentation.viewmodel.MoviesViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class MoviesFragment : Fragment() {
 
@@ -41,6 +43,29 @@ class MoviesFragment : Fragment() {
         return binding.root
     }
 
+
+    private fun filterList(query : String?) {
+        if (query != null) {
+            viewModel.listOfMovies.observe(viewLifecycleOwner) { movies ->
+                val filteredList = ArrayList<Movie>()
+                for (i in movies ?: emptyList()) {
+                    if (i.name?.lowercase(Locale.getDefault())?.contains(query.lowercase(Locale.getDefault())) == true) {
+                        filteredList.add(i)
+                    }
+                }
+                if (filteredList.isEmpty()) {
+                    binding.clSearchError.visibility = View.VISIBLE
+                    binding.clMain.visibility = View.GONE
+                    binding.clError.visibility = View.GONE
+                } else {
+                    binding.clMain.visibility = View.VISIBLE
+                    binding.clSearchError.visibility = View.GONE
+                    moviesAdapter.setFilteredList(filteredList)
+                }
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,6 +81,27 @@ class MoviesFragment : Fragment() {
             viewModel.loadTopMovies()
         }
 
+        binding.searchView.setOnSearchClickListener {
+            binding.textView.visibility = View.INVISIBLE
+        }
+
+        binding.searchView.setOnCloseListener {
+            binding.textView.visibility = View.VISIBLE
+            return@setOnCloseListener false
+        }
+
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true
+            }
+        })
+
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             with(binding) {
@@ -68,6 +114,7 @@ class MoviesFragment : Fragment() {
         }
 
     }
+
 
     private fun observeViewModel() {
 
@@ -110,6 +157,7 @@ class MoviesFragment : Fragment() {
             val fragment = MovieDetailFragment.newInstance(movie)
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view, fragment)
+                .addToBackStack(null)
                 .commit()
         }
     }
@@ -119,6 +167,7 @@ class MoviesFragment : Fragment() {
             val fragment = FavoriteMoviesFragment.newInstance()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view, fragment)
+                .addToBackStack(null)
                 .commit()
         }
     }
@@ -139,4 +188,6 @@ class MoviesFragment : Fragment() {
             return MoviesFragment()
         }
     }
+
+
 }
