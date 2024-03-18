@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">ТинькоффПоиск</string>
     <string name="favorite">Избранное</string>
     <string name="popular">Популярные</string>
     <string name="error_description">Произошла ошибка при загрузке данных,\nпроверьте подключение к сети.</string>

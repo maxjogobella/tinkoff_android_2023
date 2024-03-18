@@ -25,10 +25,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view)
         if (fragment is MoviesFragment) {
-
+            // ничего не делать
         } else {
             super.onBackPressed()
         }

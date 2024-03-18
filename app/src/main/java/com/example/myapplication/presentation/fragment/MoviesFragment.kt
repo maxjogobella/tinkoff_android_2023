@@ -54,8 +54,12 @@ class MoviesFragment : Fragment() {
                     }
                 }
                 if (filteredList.isEmpty()) {
-
+                    binding.clSearchError.visibility = View.VISIBLE
+                    binding.clMain.visibility = View.GONE
+                    binding.clError.visibility = View.GONE
                 } else {
+                    binding.clMain.visibility = View.VISIBLE
+                    binding.clSearchError.visibility = View.GONE
                     moviesAdapter.setFilteredList(filteredList)
                 }
             }
@@ -85,6 +89,7 @@ class MoviesFragment : Fragment() {
             binding.textView.visibility = View.VISIBLE
             return@setOnCloseListener false
         }
+
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

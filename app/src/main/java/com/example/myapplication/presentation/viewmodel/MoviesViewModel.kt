@@ -29,7 +29,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     private val addFavoriteMovieUseCase = AddFavoriteMovieUseCase(repository)
     private val getFavoriteMoviesUseCase = GetFavoriteMoviesUseCase(repository)
 
-    val _listOfMovies = MutableLiveData<List<Movie>?>()
+    private val _listOfMovies = MutableLiveData<List<Movie>?>()
     private val _isLoading = MutableLiveData<Boolean>()
     private val _internetIsNotWorking = MutableLiveData<Boolean>()
 
