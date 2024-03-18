@@ -24,4 +24,13 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view)
+        if (fragment is MoviesFragment) {
+
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
