@@ -9,7 +9,8 @@ data class MovieStorageModel(
     val name : String? = null,
     val url : String? = null,
     val year : Int? = null,
-    val listOfGenre : List<GenresStorageModel>? = null
+    val listOfGenre : List<GenresStorageModel>? = null,
+    var isFavorite : Boolean? = null
 )
 
 

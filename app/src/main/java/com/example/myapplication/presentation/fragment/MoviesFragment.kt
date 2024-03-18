@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
+import com.example.myapplication.data.MovieRepositoryImpl
+import com.example.myapplication.data.storage.database.MovieDatabase
 import com.example.myapplication.databinding.MoviesFragmentBinding
 import com.example.myapplication.domain.models.Movie
 import com.example.myapplication.presentation.adapter.TopMoviesAdapter
@@ -50,16 +52,29 @@ class MoviesFragment : Fragment() {
         setAdapterListenerOnEndListener()
 
 
-        binding.buttonTryAgain.setOnClickListener{
+        binding.buttonTryAgain.setOnClickListener {
             viewModel.loadTopMovies()
+        }
+
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            with(binding) {
+                if (isLoading) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
+            }
         }
 
     }
 
     private fun observeViewModel() {
 
-        viewModel.listOfMovies.observe(viewLifecycleOwner) { listOfTopMovies ->
+        viewModel.moviesWithFavorites.observe(viewLifecycleOwner) { listOfTopMovies ->
+            Log.d("ObserveViewModel", listOfTopMovies.toString())
             moviesAdapter.submitList(listOfTopMovies)
+            moviesAdapter.notifyDataSetChanged()
         }
 
         viewModel.internetIsNotWorking.observe(viewLifecycleOwner) { isNotWorking ->
@@ -85,7 +100,8 @@ class MoviesFragment : Fragment() {
             coroutine.launch {
                 viewModel.saveMovie(movie)
             }
-            Toast.makeText(requireContext(), "Фильм успешно добавлен", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Фильм успешно добавлен", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -108,7 +124,8 @@ class MoviesFragment : Fragment() {
     }
 
     private fun setUpAdapter() {
-        moviesAdapter = TopMoviesAdapter()
+        moviesAdapter =
+            TopMoviesAdapter(movieRepository = MovieRepositoryImpl(requireActivity().application))
         binding.recycleViewMovies.adapter = moviesAdapter
     }
 

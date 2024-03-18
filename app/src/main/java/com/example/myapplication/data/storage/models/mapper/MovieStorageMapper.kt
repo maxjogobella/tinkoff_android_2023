@@ -20,6 +20,7 @@ class MovieStorageMapper {
             name = movieStorageModel.name,
             url = movieStorageModel.url,
             year = movieStorageModel.year,
+            isFavorite = movieStorageModel.isFavorite,
             listOfGenre = movieStorageModel.listOfGenre?.let { mapListOfGenresStorageToEntity(it) }
         )
     }
@@ -34,6 +35,7 @@ class MovieStorageMapper {
             year = movie.year,
             name = movie.name,
             url = movie.url,
+            isFavorite = movie.isFavorite,
             listOfGenre = movie.listOfGenre?.let { mapListOfEntityGenresToListOfStorageGenres(it) }
         )
     }
